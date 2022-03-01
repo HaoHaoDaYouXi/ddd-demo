@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss:SSS} [%thread] %-5level %logger{36}:%L - %msg%n</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="B" class="ch.qos.logback.core.rolling.RollingFileAppender" immediateFlush="true">
+        <file>./logs/business.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>./logs/business.log.%d{yyyy-MM-dd}</fileNamePattern>
+            <maxHistory>7</maxHistory>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+
+        <encoder>
+            <!--是否立即刷新磁盘 默认cache 8k-->
+<!--            <ImmediateFlush>false</ImmediateFlush>-->
+            <charset>utf-8</charset>
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss:SSS} [%thread] %-5level %logger{36}:%L - %msg%n</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="E" class="ch.qos.logback.core.rolling.RollingFileAppender" immediateFlush="true">
+        <file>./logs/exception.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 每天回滚一次 -->
+            <fileNamePattern>./logs/exception.log.%d{yyyy-MM-dd}</fileNamePattern>
+            <maxHistory>7</maxHistory>
+            <cleanHistoryOnStart>true</cleanHistoryOnStart>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <!--是否立即刷新磁盘 默认cache 8k-->
+<!--        <ImmediateFlush>true</ImmediateFlush>-->
+
+        <encoder>
+            <charset>utf-8</charset>
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss:SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>
+        </encoder>
+    </appender>
+
+    <!--	<appender name="action-log" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+    <!--		<file>./actionlogs/action.log</file>-->
+    <!--		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+    <!--			&lt;!&ndash; 每小时回滚一次 &ndash;&gt;-->
+    <!--			<fileNamePattern>./actionlogs/action.%d{yyyy-MM-dd}.log</fileNamePattern>-->
+    <!--			<maxHistory>30</maxHistory>-->
+    <!--			<cleanHistoryOnStart>true</cleanHistoryOnStart>-->
+    <!--		</rollingPolicy>-->
+    <!--		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
+    <!--			<level>INFO</level>-->
+    <!--		</filter>-->
+    <!--		-->
+    <!--		<encoder>-->
+    <!--			&lt;!&ndash;不立即刷新磁盘 默认cache 8k&ndash;&gt;-->
+    <!--			<ImmediateFlush>false</ImmediateFlush>-->
+    <!--			<charset>utf-8</charset>-->
+    <!--			<Pattern>%d{yyyy-MM-dd HH:mm:ss:SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>-->
+    <!--		</encoder>-->
+    <!--	</appender>-->
+
+<!--    <logger name="com.java.demo.mapper" level="DEBUG" />-->
+
+    <logger name="com.java.demo" level="INFO" additivity="false">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="B" />
+        <appender-ref ref="E" />
+    </logger>
+
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="B" />
+        <appender-ref ref="E" />
+    </root>
+</configuration>
